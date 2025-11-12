@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <conio.h>
+
+#define MAX 100
+
+int binarySearch(int arr[], int n, int key) {
+    int low = 0, high = n - 1, mid;
+    while (low <= high) {
+        mid = (low + high) / 2;
+        if (arr[mid] == key)
+            return mid;
+        else if (arr[mid] < key)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    return -1;
+}
+
+void main() {
+    int rollNumbers[MAX];
+    int n, key, result, i, j, temp;
+
+    clrscr();
+
+    printf("Enter the number of students who attended the training: ");
+    scanf("%d", &n);
+
+    printf("\nEnter the roll numbers of students (in sorted order):\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &rollNumbers[i]);
+    }
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (rollNumbers[i] > rollNumbers[j]) {
+                temp = rollNumbers[i];
+                rollNumbers[i] = rollNumbers[j];
+                rollNumbers[j] = temp;
+            }
+        }
+    }
+
+    printf("\nEnter the roll number to search: ");
+    scanf("%d", &key);
+
+    result = binarySearch(rollNumbers, n, key);
+
+    if (result != -1)
+        printf("\nStudent with roll number %d attended the training program.", key);
+    else
+        printf("\nStudent with roll number %d did NOT attend the training program.", key);
+
+    getch();
+}
